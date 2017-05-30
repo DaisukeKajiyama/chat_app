@@ -1,5 +1,5 @@
 import React from 'react'
-import _ from 'lodash' 
+import _ from 'lodash'
 import classNames from 'classnames'
 import Utils from '../../utils'
 import MessagesStore from '../../stores/messages'
@@ -43,7 +43,7 @@ class UserList extends React.Component {
   onStoreChange() {
     this.setState(this.getStateFromStore())
   }
-  changeOpenChat(id){
+  changeOpenChat(id) {
     MessagesAction.changeOpenChat(id)
   }
   render() {
