@@ -1,5 +1,6 @@
+import request from 'superagent'
 import Dispatcher from '../dispatcher'
-import {ActionTypes} from '../constants/app'
+import {ActionTypes, APIEndpoints, CSRFToken} from '../constants/app'
 
 export default {
   changeOpenChat(newUserID) {
@@ -14,6 +15,44 @@ export default {
       userID: userID,
       message: message,
       timestamp: +new Date(),
+    })
+  },
+  getMessage() {
+    return new Promise((resolve, reject) => {
+      request
+      .get('/api/messages') // 取得したいjsonがあるURLを指定する
+      .end((error, res) => {
+        if (!error && res.status === 200) { // 200はアクセスが成功した際のステータスコードです。
+          const json = JSON.parse(res.text)
+          Dispatcher.handleServerAction({
+            type: ActionTypes.GET_MESSAGE,
+            json, // json: jsonと同じ。keyとvalueが一致する場合、このように省略出来ます。
+          })
+          resolve(json)
+        } else {
+          reject(res)
+        }
+      })
+    })
+  },
+  postMessage(MessageId) {
+    return new Promise((resolve, reject) => {
+      request
+      .post(`${APIEndpoints.MESSAGE}`) // 後ほど説明します。
+      .set('X-CSRF-Token', CSRFToken()) // 後ほど説明します。
+      .send({message_id: messageId}) // これによりサーバ側に送りたいデータを送ることが出来ます。
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          Dispatcher.handleServerAction({
+            type: ActionTypes.POST_MESSAGE,
+            messageId,
+            json,
+          })
+        } else {
+          reject(res)
+        }
+      })
     })
   },
 }

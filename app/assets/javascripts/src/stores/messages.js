@@ -17,7 +17,7 @@ const messages = {
     },
     messages: [
       {
-        contents: 'Hey!',
+        contents: 'Hi',
         from: 2,
         timestamp: 1424469793023,
       },
@@ -47,7 +47,7 @@ const messages = {
         timestamp: 1424352522000,
       },
     ],
-  },
+ },
   4: {
     user: {
       name: 'Todd Motto',
@@ -78,6 +78,14 @@ class ChatStore extends BaseStore {
   removeChangeListener(callback) {
     this.off('change', callback)
   }
+  // getMessage() {
+  //   if (!this.get('MessageJson')) this.setMessage([])
+  //   return this.get('MessageJson')
+  // }
+  // setMessage(array) {
+  //   this.set('MessageJson', array)
+  // }
+
   getOpenChatUserID() {
     return openChatID
   }
@@ -103,11 +111,29 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
     case ActionTypes.SEND_MESSAGE:
       const userID = action.userID
       messages[userID].messages.push({
-      contents: action.message,
-      timestamp: action.timestamp,
-      from: UserStore.user.id,
-    })
+        contents: action.message,
+        timestamp: action.timestamp,
+        from: UserStore.user.id,
+      })
       messages[openChatID].lastAccess.currentUser = +new Date()
+      MessagesStore.emitChange()
+      break
+
+    case ActionTypes.GET_MESSAGE:
+      const message = action.json
+
+      for (var key in message){
+        messages[message[key].from].messages.push({
+          contents: message[key].contents,
+          timestamp: message[key].created_at,
+          from: message[key].from,
+        })
+      }
+
+      MessagesStore.emitChange()
+      break
+
+    case ActionTypes.POST_MESSAGE:
       MessagesStore.emitChange()
       break
   }
