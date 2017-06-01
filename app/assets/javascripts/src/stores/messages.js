@@ -82,13 +82,6 @@ class ChatStore extends BaseStore {
   removeChangeListener(callback) {
     this.off('change', callback)
   }
-  // getMessage() {
-  //   if (!this.get('MessageJson')) this.setMessage([])
-  //   return this.get('MessageJson')
-  // }
-  // setMessage(array) {
-  //   this.set('MessageJson', array)
-  // }
 
   getOpenChatUserID() {
     return openChatID
