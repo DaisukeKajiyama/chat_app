@@ -136,7 +136,6 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
           send_to: message[key].send_to
         })
       } else {
-        debugger
         messages[message[key].send_to].messages.push({
           contents: message[key].contents,
           timestamp: message[key].created_at,
