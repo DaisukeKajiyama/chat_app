@@ -7,7 +7,7 @@ module Api
     end
 
     def create
-      @message = Message.create(content:"Hello",from:"1")
+      @message = Message.create(contents:params[:contents],from:1,send_to:params[:send_to])
     end
 
   end

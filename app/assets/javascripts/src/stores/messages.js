@@ -20,11 +20,13 @@ const messages = {
         contents: 'Hi',
         from: 2,
         timestamp: 1424469793023,
+        send_to: 1,
       },
       {
         contents: 'Hey, what\'s up?',
         from: 1,
         timestamp: 1424469794000,
+        send_to: 2,
       },
     ],
   },
@@ -45,6 +47,7 @@ const messages = {
         contents: 'Want a game of ping pong?',
         from: 3,
         timestamp: 1424352522000,
+        send_to: 1,
       },
     ],
  },
@@ -64,6 +67,7 @@ const messages = {
         contents: 'Please follow me on twitter I\'ll pay you',
         timestamp: 1424423579000,
         from: 4,
+        send_to: 1,
       },
     ],
   },
@@ -109,11 +113,12 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       break
 
     case ActionTypes.SEND_MESSAGE:
-      const userID = action.userID
+    const userID = action.userID
       messages[userID].messages.push({
         contents: action.message,
         timestamp: action.timestamp,
         from: UserStore.user.id,
+        send_to: action.userID
       })
       messages[openChatID].lastAccess.currentUser = +new Date()
       MessagesStore.emitChange()
@@ -123,17 +128,29 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
       const message = action.json
 
       for (var key in message){
+        if (message[key].from !== 1) {
         messages[message[key].from].messages.push({
           contents: message[key].contents,
           timestamp: message[key].created_at,
           from: message[key].from,
+          send_to: message[key].send_to
         })
+      } else {
+        debugger
+        messages[message[key].send_to].messages.push({
+          contents: message[key].contents,
+          timestamp: message[key].created_at,
+          from: message[key].from,
+          send_to: message[key].send_to
+        })
+      }
       }
 
       MessagesStore.emitChange()
       break
 
     case ActionTypes.POST_MESSAGE:
+
       MessagesStore.emitChange()
       break
   }

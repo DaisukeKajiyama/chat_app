@@ -35,18 +35,19 @@ export default {
       })
     })
   },
-  postMessage(MessageId) {
+  postMessage(userID, message) {
     return new Promise((resolve, reject) => {
       request
       .post(`${APIEndpoints.MESSAGE}`) // 後ほど説明します。
       .set('X-CSRF-Token', CSRFToken()) // 後ほど説明します。
-      .send({message_id: messageId}) // これによりサーバ側に送りたいデータを送ることが出来ます。
+      .send({send_to:userID,contents: message}) // これによりサーバ側に送りたいデータを送ることが出来ます。
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
             type: ActionTypes.POST_MESSAGE,
-            messageId,
+            contents,
+            send_to: userID,
             json,
           })
         } else {
