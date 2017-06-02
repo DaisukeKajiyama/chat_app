@@ -1,1 +1,17 @@
-<h1>profile</h1>
+<div class="user_profile">
+  <div class="user_profile_image">
+    <%= image_tag("default_image.jpg", :class => "user_profile_image_id") %>
+  </div>
+
+  <div class="user_profile_name">
+    <%= current_user.name %>
+  </div>
+
+  <div class="user_profile_email">
+    <%= current_user.email %>
+  </div>
+
+  <div class="user_profile_edit_btn">
+    <a class="btn btn-info" href="/users/edit">プロフィール編集</a>
+  </div>
+</div>

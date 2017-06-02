@@ -12,9 +12,9 @@ Rails.application.routes.draw do
   resources :users, only:[:index, :show, :edit, :update]
   resources :messages
 
-  # root "messages#index"
-
   namespace :api, {format:'json'} do
     resources :messages
+    resources :users
+    resources :current_user
   end
 end

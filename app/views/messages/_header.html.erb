@@ -1,8 +1,12 @@
+<% if user_signed_in? %>
+
 <header class="navbar navbar-fixed-top navbar-default">
         <nav>
           <ul class="header-right nav navbar-nav navbar-right">
-            <li><%= link_to "マイページ" ,  "" %></li>
+            <li><%= link_to "マイページ" ,  current_user %></li>
             <li><%= link_to "ログアウト" , destroy_user_session_path, method: :delete  %></li>
           </ul>
         </nav>
 </header>
+
+<%end%>

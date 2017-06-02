@@ -1,9 +1,28 @@
-const UserStore = {
-  user: {
-    id: 1,
-    name: 'John Doek',
-    profilePicture: 'https://avatars1.githubusercontent.com/u/8901351?v=3&s=200',
-  },
+import Dispatcher from '../dispatcher'
+import BaseStore from '../base/store'
+import {ActionTypes} from '../constants/app'
+
+class UserStore extends BaseStore {
+  getUsers() {
+    if (!this.get('users')) this.setUsers([])
+    return this.get('users')
+  }
+  setUsers(array) {
+    this.set('users', array)
+  }
 }
+
+const User = new UserStore()
+
+User.dispatchToken = Dispatcher.register(payload => {
+  const action = payload.action
+
+  switch (action.type) {
+    case ActionTypes.LOAD_USERS:
+      User.setUsers(action.json)
+      User.emitChange()
+      break
+  }
+})
 
 export default UserStore
