@@ -18,18 +18,30 @@ class App extends React.Component {
   }
 
   getStateFromStores() {
+    const openChatId = MessagesStore.getOpenChatUserID()
     const currentUser = CurrentUserStore.getCurrentUser()
+    if (!currentUser) return {}
+    const currentUserMessages = currentUser.messages ? currentUser.messages : []
+    const currentUserMessagesToUser = _.filter(currentUserMessages, {to_user_id: openChatId})
+    const users = MessagesStore.getUserMessages()
+    const openUserMessages = users.messages ? users.messages : []
+    const allMessages = _.concat(currentUserMessagesToUser, openUserMessages)
+    const messages = _.sortBy(allMessages, (message) => { return message.created_at })
+
     return {
       currentUser,
+      messages,
     }
   }
 
   componentDidMount() {
-  CurrentUserStore.onChange(this.onChangeHandler)
+    MessagesStore.onChange(this.onChangeHandler)
+    CurrentUserStore.onChange(this.onChangeHandler)
   }
 
   componentWillUnmount() {
-  CurrentUserStore.offChange(this.onChangeHandler)
+    MessagesStore.offChange(this.onChangeHandler)
+    CurrentUserStore.offChange(this.onChangeHandler)
   }
 
   onStoreChange() {

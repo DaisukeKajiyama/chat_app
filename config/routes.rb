@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/search' => 'users#search'
+
   devise_for :users
   devise_scope :user do
     authenticated :user do
@@ -14,7 +16,11 @@ Rails.application.routes.draw do
 
   namespace :api, {format:'json'} do
     resources :messages
-    resources :users
+    resources :users do
+      collection do
+        get 'search'
+      end
+    end
     resources :current_user
   end
 end

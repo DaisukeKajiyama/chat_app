@@ -3,7 +3,7 @@ module Api
 
     def index
       @user = current_user
-      render json: @user
+      render json: @user.as_json(methods: [:messages])
     end
 
   end

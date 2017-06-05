@@ -6,4 +6,13 @@ class User < ActiveRecord::Base
 has_many :messages
 validates :email, presence: true,
           uniqueness: true
+
+    def self.search(search)
+      if search
+        where(['name LIKE ?', "%#{search}%"])
+      else
+        all
+      end
+    end
+
 end

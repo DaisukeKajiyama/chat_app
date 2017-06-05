@@ -30,11 +30,45 @@
 }
 
 /*header*/
+.header {
+    height: 50px;
+    font-size: 1.15em;
+    background: #f8f8f8;
+    border-bottom: 1px solid #e0e0e0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 998;
+}
+
+.header-left {
+    float: left;
+    line-height: 50px;
+    padding-left: 30px;
+}
+
 .header-right {
   float: right;
   line-height: 50px;
   padding-right: 30px;
 }
+
+.header-logo {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.header-logo-link {
+  color: #000;
+  text-decoration: none;
+    &:hover {
+    color: #000;
+    text-decoration: none;
+    }
+}
+
+
 
 /* buttons */
 
@@ -80,14 +114,18 @@
     border-radius: 4px;
     margin-top: 100px;
     text-align: center;
-}
-
-.user_profile_name {
-    padding-bottom: 10px;
+    img{
+      border-radius: 100px;
+    }
 }
 
 .user_profile_name, .user_profile_email {
     font-size: 18px;
+    padding-top:10px;
+}
+
+.user_profile_email {
+  padding-bottom: 20px;
 }
 
 .edit_wrapper {
@@ -97,4 +135,60 @@
 
 .edit_user_title {
     padding-top:80px;
+}
+
+/* search */
+.search {
+    text-align: center;
+}
+
+.chatapp-logo {
+    margin-top: 115px;
+}
+
+.google {
+    font-size: 80px;
+    font-weight: 500;
+}
+
+.logo-c, .logo-t {
+    color: #4285f4;
+}
+
+.logo-h, .logo-p {
+    color: #ea4335;
+}
+
+.logo-a, .logo-p2 {
+    color: #fbbc05;
+}
+
+.logo-A {
+    color: #34a853;
+}
+
+.search_form {
+    width: 35%;
+    padding: 8px;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.search_user_list {
+    padding-top: 1px;
+    font-size: 16px;
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.search_user_list_result {
+    cursor: pointer;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 5px;
 }

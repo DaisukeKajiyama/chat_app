@@ -18,6 +18,7 @@ export const ActionTypes = keyMirror({
   LOAD_USERS: null,
   LOAD_CURRENT_USER: null,
   LOAD_USER_MESSAGES: null,
+  LOAD_SEARCH_USERS: null,
 })
 
 export function CSRFToken() {

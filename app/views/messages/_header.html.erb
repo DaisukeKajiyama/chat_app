@@ -1,12 +1,20 @@
 <% if user_signed_in? %>
 
 <header class="navbar navbar-fixed-top navbar-default">
-        <nav>
-          <ul class="header-right nav navbar-nav navbar-right">
-            <li><%= link_to "マイページ" ,  current_user %></li>
-            <li><%= link_to "ログアウト" , destroy_user_session_path, method: :delete  %></li>
-          </ul>
-        </nav>
+  <div class="header-left">
+    <div class="header-logo">
+      <%= link_to "ChatApp", authenticated_root_path, class:"header-logo-link" %>
+    </div>
+  </div>
+
+  <nav>
+    <ul class="header-right nav navbar-nav navbar-right">
+      <li><%= link_to "ユーザーを探す" ,  users_search_path %></li>
+      <li><%= link_to "マイページ" ,  current_user %></li>
+      <li><%= link_to "ログアウト" , destroy_user_session_path, method: :delete  %></li>
+      </ul>
+    </nav>
+
 </header>
 
 <%end%>
