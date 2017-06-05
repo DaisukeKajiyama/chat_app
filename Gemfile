@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.2.6'
 gem 'sqlite3'
+gem 'carrierwave'
 gem 'bootstrap-sass',       '3.2.0.0'
 gem 'devise', '3.5.1'
 gem 'haml-rails'
