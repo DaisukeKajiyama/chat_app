@@ -1,14 +1,20 @@
 import ReactDecorator from '../base/react_decorator'
 import BaseRouter from '../base/router'
-import CurrentUserAction from '../actions/currentUser'
 import App from '../components/messages/app'
+import UsersAction from '../actions/users'
+import CurrentUserAction from '../actions/currentUser'
 
 export default class MessageRouter extends BaseRouter {
   register() {
-    this.route('/', this.initStores, this.decorateApp)
+    this.route('/', this.decorateApp, this.loadUsers, this.loadCurrentUser)
   }
 
-  initStores(ctx, next) {
+  loadUsers(ctx, next) {
+    UsersAction.loadUsers()
+    next()
+  }
+
+  loadCurrentUser(ctx, next) {
     CurrentUserAction.loadCurrentUser()
     next()
   }

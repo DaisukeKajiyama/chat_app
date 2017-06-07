@@ -36,25 +36,25 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
   switch (action.type) {
 
-  case ActionTypes.LOAD_USER_MESSAGES:
-    openChatId = action.id
-    MessagesStore.setUserMessages(action.json)
-    MessagesStore.emitChange()
-    break
+    case ActionTypes.LOAD_USER_MESSAGES:
+      openChatID = action.id
+      MessagesStore.setUserMessages(action.json)
+      MessagesStore.emitChange()
+      break
 
-  case ActionTypes.SAVE_MESSAGE:
-    {
-      const messages = CurrentUserStore.getCurrentUser().messages
-      const currentUserID = CurrentUserStore.getCurrentUser().id
-      messages.push({
-        id: Math.floor(Math.random() * 1000000),
-        content: action.content,
-        to_user_id: action.to_user_id,
-        user_id: currentUserID,
-      })
-    }
-    MessagesStore.emitChange()
-    break
+    case ActionTypes.SAVE_MESSAGE:
+      {
+        const messages = CurrentUserStore.getCurrentUser().messages
+        const currentUserID = CurrentUserStore.getCurrentUser().id
+        messages.push({
+          id: Math.floor(Math.random() * 1000000),
+          content: action.content,
+          to_user_id: action.to_user_id,
+          user_id: currentUserID,
+        })
+      }
+      MessagesStore.emitChange()
+      break
 
   // case ActionTypes.SAVE_IMAGE_CHAT:
   //   {

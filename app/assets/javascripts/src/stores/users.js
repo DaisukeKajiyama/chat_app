@@ -29,8 +29,6 @@ User.dispatchToken = Dispatcher.register(payload => {
       break
   }
 
-
-
   return true
 })
 

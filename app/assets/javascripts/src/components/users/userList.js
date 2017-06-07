@@ -35,9 +35,9 @@ export default class UserList extends React.Component {
     this.setState(this.getStateFromStores())
   }
 
-  // onSubmitHandler(to_user_id) {
-  //   Utils.post('/friendships', {to_user_id})
-  // }
+  onSubmitHandler(to_user_id) {
+    Utils.post('/friendships', {to_user_id})
+  }
 
   render() {
     const searchUsers = this.state.users
@@ -48,7 +48,7 @@ export default class UserList extends React.Component {
           _.map(searchUsers, (user) => {
             return (
               <li className='search_user_list_item' key={user.id}>
-                <div className='search_user_list_result' >
+                <div className='search_user_list_result' onClick={this.onSubmitHandler.bind(this, user.id)}>
                   <img className='search_user_list_result_image' src={user.image ? '/user_images/' + user.image : 'https://chatapple.herokuapp.com/assets/images/default_image.jpg'} />
                   {user.name}
                 </div>

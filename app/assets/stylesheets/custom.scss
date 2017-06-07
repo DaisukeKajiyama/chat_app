@@ -1,6 +1,10 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+input[type=submit] {
+    font-family: FontAwesome;
+}
+
 .form-control {
   display: block;
   width:100%;
@@ -197,4 +201,59 @@
     border-radius: 50%;
     width: 40px;
     margin-right: 10px;
+}
+
+/* user list */
+
+.user-list__item {
+    padding: 14px 10px 14px 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.user-list__item--active {
+    background: rgba(0,0,0,0.05);
+    color: #fff;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    margin-top: -1px;
+}
+
+.user-list__item__picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+}
+
+.user-list__item__details {
+    width: 220px;
+    float: left;
+    padding-left: 15px;
+}
+
+.remove-chat-btn {
+  color: #d9534f;
+  float: right;
+  margin-top: -10px;
+  background: #fff;
+  border: 0;
+}
+
+.user-list__item--active, .remove-chat-btn {
+    background: rgba(0,0,0,0.01);
+}
+
+.user-list-name {
+  color: black;
+}
+
+.user-list__item--active {
+   .user-list-name {
+     color: white;
+   }
+   .remove-chat-btn {
+     color: white;
+   }
 }

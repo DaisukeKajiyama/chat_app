@@ -23,12 +23,12 @@ class UserList extends React.Component {
   getStateFromStores() {
     const currentUser = CurrentUserStore.getCurrentUser()
     if (!currentUser) return {}
-    const currentUserId = currentUser.id
+    const currentUserID = currentUser.id
     return {
       users: UserStore.getUsers(),
-      openChatId: MessagesStore.getOpenChatUserID(),
+      openChatID: MessagesStore.getOpenChatUserID(),
       currentUser,
-      currentUserId,
+      currentUserID,
     }
   }
 
@@ -48,82 +48,95 @@ class UserList extends React.Component {
     this.setState(this.getStateFromStores())
   }
 
-  changeOpenChat(userId) {
-    MessagesAction.loadUserMessages(userId)
-    const userChatAccess = this.getLastAccess(userId)
-    if (userChatAccess) {
-      MessagesAction.updateLastAccess(userId, new Date())
-    } else {
-      MessagesAction.createLastAccess(userId, new Date())
-    }
+  changeOpenChat(userID) {
+    MessagesAction.loadUserMessages(userID)
+    // const userChatAccess = this.getLastAccess(userID)
+    // if (userChatAccess) {
+    //   MessagesAction.updateLastAccess(userID, new Date())
+    // } else {
+    //   MessagesAction.createLastAccess(userID, new Date())
+    // }
     CurrentUserAction.loadCurrentUser()
   }
 
-  render() {
-    const {users, openChatId} = this.state
+  // getLastAccess(toUserID) {
+  //   const {currentUser} = this.state
+  //   const lastAccess = _.find(currentUser.accesses, {to_user_id: toUserID})
+  //   return lastAccess
+  // }
 
-    const friendUsers = _.map(users, (user) => {
-          const messageLength = user.messages.length
-          const lastMessage = user.messages[messageLength - 1]
-          const userChatAccess = this.getLastAccess(user.id)
-          let newMessageIcon
-          if (lastMessage) {
-            if (!userChatAccess || lastMessage.created_at > userChatAccess.last_access) {
-              newMessageIcon = (
-                <i className='fa fa-circle new-message-icon' />
-            )
-          }
-        }
-
-        const itemClasses = classNames({
-          'user-list__item': true,
-          'clear': true,
-          'user-list__item--active': openChatId === user.id,
-        })
-        return (
-          <li
-            key={user.id}
-            onClick={this.changeOpenChat.bind(this, user.id)}
-            className={itemClasses}
-          >
-            <form action={`/friendships/${user.id}`} method='post'>
-              <input
-                type='hidden'
-                name='authenticity_token'
-                value={CSRFToken()}
-              />
-              <input
-                type='hidden'
-                name='_method'
-              />
-              <input
-                type='submit'
-                value='&#xf057;'
-                className='remove-chat-btn'
-                onClick={this.deleteChatConfirm.bind(this)}
-              />
-            </form>
-            <div className='user-list__item__picture'>
-              <img src={user.image ? '/user_images/' + user.image : '/assets/images/default_image.jpg'} />
-            </div>
-            <div className='user-list__item__details'>
-              <div className='user-list__item__name'>
-                {newMessageIcon}
-                <a href={`users/${user.id}`} className='user-list-name'>{user.name}</a>
-              </div>
-            </div>
-          </li>
-        )
-      }, this)
-
-      return (
-          <div className='user-list'>
-            <ul className='user-list__list'>
-              {friendUsers}
-             </ul>
-          </div>
-      )
+  deleteChatConfirm(e) {
+    if (!confirm('本当に削除しますか？(チャットの履歴は残ります。)')) {
+      e.preventDefault()
     }
   }
 
-  export default UserList
+  render() {
+    const {users,openChatID} = this.state
+
+    const friendUsers = _.map(users, (user) => {
+      const messageLength = user.messages.length
+      const lastMessage = user.messages[messageLength - 1]
+      // const userChatAccess = this.getLastAccess(user.id)
+      let newMessageIcon
+      // if (lastMessage) {
+      //   if (!userChatAccess || lastMessage.created_at > userChatAccess.last_access) {
+      //     newMessageIcon = (
+      //       <i className='fa fa-circle new-message-icon' />
+      //     )
+      //   }
+      // }
+
+      const itemClasses = classNames({
+        'user-list__item': true,
+        'clear': true,
+        'user-list__item--active': openChatID === user.id,
+      })
+      return (
+        <li
+          key={user.id}
+          onClick={this.changeOpenChat.bind(this, user.id)}
+          className={itemClasses}
+        >
+          <form action={`/friendships/${user.id}`} method='post'>
+            <input
+              type='hidden'
+              name='authenticity_token'
+              value={CSRFToken()}
+            />
+            <input
+              type='hidden'
+              name='_method'
+              value='delete'
+            />
+            <input
+              type='submit'
+              value='&#xf057;'
+              className='remove-chat-btn'
+              onClick={this.deleteChatConfirm.bind(this)}
+            />
+          </form>
+          <div className='user-list__item__picture'>
+            <img src={user.image ? '/user_images/' + user.image : 'https://chatapple.herokuapp.com/assets/images/default_image.jpg'} />
+          </div>
+          <div className='user-list__item__details'>
+            <div className='user-list__item__name'>
+              {newMessageIcon}
+              <a href={`users/${user.id}`} className='user-list-name'>{user.name}</a>
+            </div>
+          </div>
+        </li>
+      )
+    }, this)
+
+    return (
+        <div className='user-list'>
+          <ul className='user-list__list'>
+            {friendUsers}
+           </ul>
+        </div>
+    )
+  }
+}
+
+export default UserList

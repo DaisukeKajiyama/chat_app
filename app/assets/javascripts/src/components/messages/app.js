@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash'
 import MessagesStore from '../../stores/messages'
 import CurrentUserStore from '../../stores/currentUser'
-// import UserList from './userList'
+import UserList from './userList'
 import MessagesBox from './messagesBox'
 
 class App extends React.Component {
@@ -18,11 +18,11 @@ class App extends React.Component {
   }
 
   getStateFromStores() {
-    const openChatId = MessagesStore.getOpenChatUserID()
+    const openChatID = MessagesStore.getOpenChatUserID()
     const currentUser = CurrentUserStore.getCurrentUser()
     if (!currentUser) return {}
     const currentUserMessages = currentUser.messages ? currentUser.messages : []
-    const currentUserMessagesToUser = _.filter(currentUserMessages, {to_user_id: openChatId})
+    const currentUserMessagesToUser = _.filter(currentUserMessages, {to_user_id: openChatID})
     const users = MessagesStore.getUserMessages()
     const openUserMessages = users.messages ? users.messages : []
     const allMessages = _.concat(currentUserMessagesToUser, openUserMessages)
@@ -51,6 +51,7 @@ class App extends React.Component {
   render() {
     return (
         <div className='app'>
+          <UserList />
           <MessagesBox {...this.state} />
         </div>
       )

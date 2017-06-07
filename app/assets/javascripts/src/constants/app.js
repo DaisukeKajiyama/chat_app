@@ -3,7 +3,7 @@ import keyMirror from 'keymirror'
 export const Root = window.location.origin || `${window.location.protocol}//${window.location.hostname}`
 export const APIRoot = `${Root}/api`
 export const APIEndpoints = {
-  MESSAGE: APIRoot + '/messages',
+  MESSAGES: APIRoot + '/messages',
   USERS: APIRoot + '/users',
   CURRENT_USER: APIRoot + '/current_user',
 }

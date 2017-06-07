@@ -23,8 +23,8 @@ export default {
   },
 
   loadSearchUsers(search_string) {
-  return new Promise((resolve, reject) => {
-    request
+    return new Promise((resolve, reject) => {
+      request
     .get(`${APIEndpoints.USERS}/search`)
     .query({search_string})
     .end((error, res) => {
@@ -37,9 +37,9 @@ export default {
         resolve(json)
       } else {
         reject(res)
-       }
-     })
-   })
- },
+      }
+    })
+    })
+  },
 
 }
