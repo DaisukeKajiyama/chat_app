@@ -95,7 +95,7 @@ export default {
           let json = JSON.parse(res.text)
           Dispatcher.handleServerAction({
             type: ActionTypes.SAVE_IMAGE_CHAT,
-            image: {url:file.name},
+            image: file.name,
             to_user_id,
             json,
           })

@@ -21,7 +21,7 @@ class MessagesBox extends React.Component {
         'message-box__item--from-current': message.user_id === currentUser.id,
         'clear': true,
       })
-
+      console.log(message.image.url)
       return (
         <li key={message.id} className={messageClasses}>
           <div className='message-box__item__contents'>

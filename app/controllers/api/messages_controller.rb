@@ -12,7 +12,7 @@ module Api
     end
 
     def upload_image
-      @message = current_user.messages.create(to_user_id:params[:to_user_id], image:params[:image])
+      @message = current_user.messages.create(to_user_id:params[:to_user_id],image:params[:image])
       render json: {message: @message}
     end
 
