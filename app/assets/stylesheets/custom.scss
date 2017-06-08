@@ -11,20 +11,13 @@ input[type=submit] {
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
-  line-height: 1.42857143;
-  color: #555555;
   background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
   border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,0.075);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+
 }
 
 .login_title, .new_user_title, .edit_user_title {
+  color: #1dcd00;
   text-align: center;
   padding-bottom: 25px;
 }
@@ -64,10 +57,10 @@ input[type=submit] {
 }
 
 .header-logo-link {
-  color: #000;
+  color: #1dcd00;
   text-decoration: none;
     &:hover {
-    color: #000;
+    color: #1dcd00;
     text-decoration: none;
     }
 }
@@ -78,8 +71,20 @@ input[type=submit] {
 
 .btn-info {
     color: #fff;
-    background-color: #5bc0de;
-    border-color: #46b8da;
+    background-color: #1dcd00;
+    border-color: #1dcd00;
+    &:hover {
+    background-color: #1dcd00;
+    border-color: #1dcd00;
+    }
+    &:focus {
+    background-color: #1dcd00;
+    border-color: #1dcd00;
+    }
+    &:active {
+    background-color: #1dcd00;
+    border-color: #1dcd00;
+    }
 }
 
 .btn {
@@ -87,20 +92,10 @@ input[type=submit] {
     margin-bottom: 0;
     font-weight: normal;
     text-align: center;
-    vertical-align: middle;
-    touch-action: manipulation;
     cursor: pointer;
-    background-image: none;
-    border: 1px solid transparent;
-    white-space: nowrap;
     padding: 6px 12px;
     font-size: 14px;
-    line-height: 1.42857143;
     border-radius: 4px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
 .login_btn, .new_user_btn, .update_user_btn {
@@ -120,6 +115,8 @@ input[type=submit] {
     text-align: center;
     img{
       border-radius: 100px;
+      width: 100px;
+      height: 100px;
     }
 }
 
@@ -150,25 +147,9 @@ input[type=submit] {
     margin-top: 115px;
 }
 
-.google {
-    font-size: 80px;
-    font-weight: 500;
-}
-
-.logo-c, .logo-t {
-    color: #4285f4;
-}
-
-.logo-h, .logo-p {
-    color: #ea4335;
-}
-
-.logo-a, .logo-p2 {
-    color: #fbbc05;
-}
-
-.logo-A {
-    color: #34a853;
+.find-a-friend {
+    font-size: 40px;
+    font-weight: 200;
 }
 
 .search_form {

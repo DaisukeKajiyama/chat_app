@@ -51,26 +51,29 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
           content: action.content,
           to_user_id: action.to_user_id,
           user_id: currentUserID,
+          image: "",
         })
       }
       MessagesStore.emitChange()
       break
 
-  // case ActionTypes.SAVE_IMAGE_CHAT:
-  //   {
-  //     const messages = CurrentUserStore.getCurrentUser().messages
-  //     const currentUserId = CurrentUserStore.getCurrentUser().id
-  //     messages.push({
-  //       image: payload.action.image,
-  //       to_user_id: payload.action.to_user_id,
-  //       user_id: currentUserId,
-  //     })
-  //   }
-  //   MessagesStore.emitChange()
-  //   break
+    case ActionTypes.SAVE_IMAGE_CHAT:
+      {
+        const messages = CurrentUserStore.getCurrentUser().messages
+        const currentUserID = CurrentUserStore.getCurrentUser().id
+        messages.push({
+          to_user_id: action.to_user_id,
+          user_id: currentUserID,
+          image: {url:action.image},
+      })
+      }
+      MessagesStore.emitChange()
+      break
   }
 
   return true
 })
+
+window.hoge = MessagesStore
 
 export default MessagesStore

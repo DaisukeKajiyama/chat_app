@@ -28,6 +28,10 @@
       <%= f.password_field :current_password, placeholder:"現在のパスワード(更新する場合は必ず入力してください。)", autocomplete: "off", class:"form-control" %>
     </div>
 
+    <div class="field form-group">
+        <%= f.file_field :image %>
+    </div>
+
     <div class="actions form-group">
       <%= f.submit "更新",class:"btn btn-info update_user_btn"%>
    </div>

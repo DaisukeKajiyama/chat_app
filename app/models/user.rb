@@ -8,15 +8,12 @@ has_many :friendships_of_from_user, :class_name => 'Friendship', :foreign_key =>
 has_many :friendships_of_to_user, :class_name => 'Friendship', :foreign_key => 'to_user_id', :dependent => :destroy
 has_many :friends_of_from_user, :through => :friendships_of_from_user, :source => 'to_user'
 has_many :friends_of_to_user, :through => :friendships_of_to_user, :source => 'from_user'
+mount_uploader :image, ImageUploader
 validates :email, presence: true,
           uniqueness: true
 
     def self.search(search)
-      if search
-        where(['name LIKE ?', "%#{search}%"])
-      else
-        all
-      end
+      where(['name LIKE ?', "%#{search}%"])
     end
 
     def friends

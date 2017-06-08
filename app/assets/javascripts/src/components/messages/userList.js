@@ -72,11 +72,11 @@ class UserList extends React.Component {
   }
 
   render() {
-    const {users,openChatID} = this.state
+    const {users, openChatID} = this.state
 
     const friendUsers = _.map(users, (user) => {
-      const messageLength = user.messages.length
-      const lastMessage = user.messages[messageLength - 1]
+      // const messageLength = user.messages.length
+      // const lastMessage = user.messages[messageLength - 1]
       // const userChatAccess = this.getLastAccess(user.id)
       let newMessageIcon
       // if (lastMessage) {
@@ -117,7 +117,7 @@ class UserList extends React.Component {
             />
           </form>
           <div className='user-list__item__picture'>
-            <img src={user.image ? '/user_images/' + user.image : 'https://chatapple.herokuapp.com/assets/images/default_image.jpg'} />
+            <img src={user.image.url ? user.image.url : 'assets/images/default_image.jpg'}/>
           </div>
           <div className='user-list__item__details'>
             <div className='user-list__item__name'>

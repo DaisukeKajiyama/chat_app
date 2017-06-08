@@ -27,13 +27,7 @@ export default class Search extends React.Component {
     return (
       <div className='search'>
         <div className='chatapp-logo'>
-          <span className='google logo-c'>S</span>
-          <span className='google logo-h'>e</span>
-          <span className='google logo-a'>a</span>
-          <span className='google logo-t'>r</span>
-          <span className='google logo-A'>c</span>
-          <span className='google logo-p'>h</span>
-          <span className='google logo-p2'>!</span>
+          <h1 className = 'find-a-friend'>友達を追加</h1>
         </div>
         <input
           type='text'

@@ -1,6 +1,10 @@
 <div class="user_profile">
   <div class="user_profile_image">
-    <%= image_tag("default_image.jpg", :class => "user_profile_image_id") %>
+    <% if @user.image.url.present? %>
+    <%= image_tag(@user.image.url, :class => "user_profile_image_id") %>
+    <% else %>
+    <%= image_tag('/assets/images/default_image.jpg', :class => "user_profile_image_id") %>
+    <% end %>
   </div>
 
   <div class="user_profile_name">

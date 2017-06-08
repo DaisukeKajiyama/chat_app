@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
   get 'users/search' => 'users#search'
-  # post '/friendships' => 'friendships#create
-
 
   devise_for :users
   devise_scope :user do
@@ -18,7 +16,11 @@ Rails.application.routes.draw do
   resources :messages
 
   namespace :api, {format:'json'} do
-    resources :messages
+    resources :messages do
+      collection do
+        post 'upload_image'
+      end
+    end
     resources :users do
       collection do
         get 'search'
