@@ -23,14 +23,9 @@ class MessagesBox extends React.Component {
       })
       return (
         <li key={message.id} className={messageClasses}>
-          {message.image.url ?
-            <div className='message-box__item__images'>
-              <img className='image-message' src={message.image.url} />
-            </div>
-            :
-            <div className='message-box__item__contents'>
-              {message.content}
-            </div> }
+          {message.image.url ? <div className='message-box__item__images'>
+          <img className='image-message' src={message.image.url} />
+          </div> : <div className='message-box__item__contents'> {message.content} </div> }
         </li>
       )
     })

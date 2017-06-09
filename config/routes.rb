@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+
   get 'users/search' => 'users#search'
 
   devise_for :users
+
   devise_scope :user do
     authenticated :user do
       root :to => 'messages#index', as: :authenticated_root
@@ -16,16 +18,24 @@ Rails.application.routes.draw do
   resources :messages
 
   namespace :api, {format:'json'} do
+
     resources :messages do
       collection do
         post 'upload_image'
       end
     end
+
     resources :users do
       collection do
         get 'search'
       end
     end
+
     resources :current_user
+
+    resources :accesses, :only => [:create, :update]
+
+    put 'accesses' => "accesses#update"
+
   end
 end

@@ -26,7 +26,7 @@ export default {
   createLastAccess(to_user_id, last_access) {
     return new Promise((resolve, reject) => {
       request
-      .post(`${APIEndpoints.USERS}`)
+      .post(`${APIEndpoints.ACCESSES}`)
       .set('X-CSRF-Token', CSRFToken())
       .send({to_user_id, last_access})
       .end((error, res) => {
@@ -43,7 +43,7 @@ export default {
   updateLastAccess(to_user_id, last_access) {
     return new Promise((resolve, reject) => {
       request
-      .put(`${APIEndpoints.CURRENT_USER}`)
+      .put(`${APIEndpoints.ACCESSES}`)
       .set('X-CSRF-Token', CSRFToken())
       .send({to_user_id, last_access})
       .end((error, res) => {

@@ -3,15 +3,12 @@ module Api
 
     def index
       @users = current_user.friends
-      render json: @users.as_json(methods: [:messages])
+      render json: @users.as_json(methods: [:messages,:accesses])
     end
 
     def show
       @user = User.find(params[:id])
-      render json: @user.as_json(methods: [:messages])
-    end
-
-    def create
+      render json: @user.as_json(methods: [:messages,:accesses])
     end
 
     def search

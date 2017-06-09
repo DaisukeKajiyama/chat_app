@@ -50,20 +50,20 @@ class UserList extends React.Component {
 
   changeOpenChat(userID) {
     MessagesAction.loadUserMessages(userID)
-    // const userChatAccess = this.getLastAccess(userID)
-    // if (userChatAccess) {
-    //   MessagesAction.updateLastAccess(userID, new Date())
-    // } else {
-    //   MessagesAction.createLastAccess(userID, new Date())
-    // }
+    const userChatAccess = this.getLastAccess(userID)
+    if (userChatAccess) {
+      MessagesAction.updateLastAccess(userID, new Date())
+    } else {
+      MessagesAction.createLastAccess(userID, new Date())
+    }
     CurrentUserAction.loadCurrentUser()
   }
 
-  // getLastAccess(toUserID) {
-  //   const {currentUser} = this.state
-  //   const lastAccess = _.find(currentUser.accesses, {to_user_id: toUserID})
-  //   return lastAccess
-  // }
+  getLastAccess(toUserID) {
+    const {currentUser} = this.state
+    const lastAccess = _.find(currentUser.accesses, {to_user_id: toUserID})
+    return lastAccess
+  }
 
   deleteChatConfirm(e) {
     if (!confirm('本当に削除しますか？(チャットの履歴は残ります。)')) {
