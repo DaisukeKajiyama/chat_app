@@ -75,16 +75,19 @@ class UserList extends React.Component {
     const {users, openChatID} = this.state
 
     const friendUsers = _.map(users, (user) => {
-      const messageLength = user.messages.length
-      const lastMessage = user.messages[messageLength - 1]
+      const {currentUser} = this.state
+      const messagestoCurrent = _.filter(user.messages, {to_user_id: currentUser.id})
+      const messagestoCurrentLength = messagestoCurrent.length
+      const lastMessagetoCurrent = messagestoCurrent[messagestoCurrentLength - 1]
       const userChatAccess = this.getLastAccess(user.id)
       let newMessageIcon
-      if (lastMessage) {
-        if (!userChatAccess || lastMessage.created_at > userChatAccess.last_access) {
+      if (lastMessagetoCurrent) {
+        if (!userChatAccess || lastMessagetoCurrent.created_at > userChatAccess.last_access) {
           newMessageIcon = (
             <i className='fa fa-circle new-message-icon' />
           )
         }
+
       }
 
       const itemClasses = classNames({
