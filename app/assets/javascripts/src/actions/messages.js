@@ -23,39 +23,39 @@ export default {
     })
   },
 
-  // createLastAccess(to_user_id, last_access) {
-  //   return new Promise((resolve, reject) => {
-  //     request
-  //     .post(`${APIEndpoints.USERS}`)
-  //     .set('X-CSRF-Token', CSRFToken())
-  //     .send({to_user_id, last_access})
-  //     .end((error, res) => {
-  //       if (!error && res.status === 200) {
-  //         const json = JSON.parse(res.text)
-  //         resolve(json)
-  //       } else {
-  //         reject(res)
-  //       }
-  //     })
-  //   })
-  // },
-  //
-  // updateLastAccess(to_user_id, last_access) {
-  //   return new Promise((resolve, reject) => {
-  //     request
-  //     .put(`${APIEndpoints.CURRENT_USER}`)
-  //     .set('X-CSRF-Token', CSRFToken())
-  //     .send({to_user_id, last_access})
-  //     .end((error, res) => {
-  //       if (!error && res.status === 200) {
-  //         const json = JSON.parse(res.text)
-  //         resolve(json)
-  //       } else {
-  //         reject(res)
-  //       }
-  //     })
-  //   })
-  // },
+  createLastAccess(to_user_id, last_access) {
+    return new Promise((resolve, reject) => {
+      request
+      .post(`${APIEndpoints.USERS}`)
+      .set('X-CSRF-Token', CSRFToken())
+      .send({to_user_id, last_access})
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          resolve(json)
+        } else {
+          reject(res)
+        }
+      })
+    })
+  },
+
+  updateLastAccess(to_user_id, last_access) {
+    return new Promise((resolve, reject) => {
+      request
+      .put(`${APIEndpoints.CURRENT_USER}`)
+      .set('X-CSRF-Token', CSRFToken())
+      .send({to_user_id, last_access})
+      .end((error, res) => {
+        if (!error && res.status === 200) {
+          const json = JSON.parse(res.text)
+          resolve(json)
+        } else {
+          reject(res)
+        }
+      })
+    })
+  },
 
   saveMessage(content, to_user_id) {
     return new Promise((resolve, reject) => {

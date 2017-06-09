@@ -10,7 +10,18 @@
     overflow-y: scroll;
   }
 
+
+
   &__item {
+
+    &__images {
+      float: left;
+      margin-bottom: 20px;
+      img {
+        border-radius: 10px;
+      }
+    }
+
     &__contents {
       background: rgba(0, 0, 0, 0.08);
       float: left;
@@ -27,6 +38,10 @@
         background: #218CB9;
         color: #fff;
         margin-bottom: 10px;
+      }
+
+      .message-box__item__images {
+        float: right;
       }
     }
 

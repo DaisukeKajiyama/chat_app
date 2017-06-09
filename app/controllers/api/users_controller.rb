@@ -11,6 +11,9 @@ module Api
       render json: @user.as_json(methods: [:messages])
     end
 
+    def create
+    end
+
     def search
       @users = User.where.not(id: current_user.id)
       @search_string = params[:search_string]
