@@ -87,6 +87,8 @@ class UserList extends React.Component {
       const messagesfromCurrentLength = messagesfromCurrent.length
       const lastMessagefromCurrent = messagesfromCurrent[messagesfromCurrentLength - 1]
 
+      // TODO: varではなくletを使う
+      // varはスコープ周りで欠陥があるので、原則使用しない
       var lastMessage
       if (lastMessagetoCurrent && lastMessagefromCurrent) {
         if (lastMessagefromCurrent.created_at > lastMessagetoCurrent.created_at) {

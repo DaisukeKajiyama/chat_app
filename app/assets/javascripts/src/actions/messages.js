@@ -23,6 +23,8 @@ export default {
     })
   },
 
+  // JSはキャメルケースなので、引数はtoUserIdにする
+  // send({to_user_id: toUserId})とするしかないかな
   createLastAccess(to_user_id, last_access) {
     return new Promise((resolve, reject) => {
       request

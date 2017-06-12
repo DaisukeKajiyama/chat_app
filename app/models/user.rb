@@ -10,6 +10,7 @@ has_many :friendships_of_to_user, :class_name => 'Friendship', :foreign_key => '
 has_many :friends_of_from_user, :through => :friendships_of_from_user, :source => 'to_user'
 has_many :friends_of_to_user, :through => :friendships_of_to_user, :source => 'from_user'
 mount_uploader :image, ImageUploader
+# nameのバリデーション必要？
 validates :email, presence: true,
           uniqueness: true
 
@@ -26,6 +27,8 @@ validates :email, presence: true,
     end
 
     def unfollow(other_user)
+      # follow, unfollowって絶対自分から起こすアクションだから、
+      # これってfriendships_of_from_user.find_byのパターンしかいらないのでは？
       if from_friend?(other_user)
         friendships_of_from_user.find_by(to_user_id:other_user.id).destroy
       elsif to_friend?(other_user)

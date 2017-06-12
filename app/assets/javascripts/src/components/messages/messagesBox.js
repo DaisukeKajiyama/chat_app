@@ -21,6 +21,19 @@ class MessagesBox extends React.Component {
         'message-box__item--from-current': message.user_id === currentUser.id,
         'clear': true,
       })
+
+      // 改行・インデントがみづらいので、要改善
+      // ちなみに一番見やすいのは以下の感じ
+      // return (
+      //   <li key={message.id} className={messageClasses}>
+      //     {message.image.url ? (
+      //       <div className='message-box__item__images'>
+      //         ...
+      //       </div>
+      //     ) : (
+      //       <div>...</div>
+      //     )
+      //   </li>
       return (
         <li key={message.id} className={messageClasses}>
           {message.image.url ? <div className='message-box__item__images'>
