@@ -7,6 +7,7 @@ import MessagesAction from '../../actions/messages'
 import CurrentUserAction from '../../actions/currentUser'
 import {CSRFToken} from '../../constants/app'
 import CurrentUserStore from '../../stores/currentUser'
+import Utils from '../../utils'
 
 class UserList extends React.Component {
 
@@ -22,7 +23,6 @@ class UserList extends React.Component {
 
   getStateFromStores() {
     const currentUser = CurrentUserStore.getCurrentUser()
-    if (!currentUser) return {}
     const currentUserID = currentUser.id
     return {
       users: UserStore.getUsers(),
@@ -41,7 +41,7 @@ class UserList extends React.Component {
   componentWillUnmount() {
     MessagesStore.offChange(this.onChangeHandler)
     UserStore.offChange(this.onChangeHandler)
-    CurrentUserStore.onChange(this.onChangeHandler)
+    CurrentUserStore.offChange(this.onChangeHandler)
   }
 
   onStoreChange() {
@@ -72,14 +72,36 @@ class UserList extends React.Component {
   }
 
   render() {
-    const {users, openChatID} = this.state
+    const {users, currentUser, openChatID} = this.state
 
     const friendUsers = _.map(users, (user) => {
-      const {currentUser} = this.state
+      const userChatAccess = this.getLastAccess(user.id)
+
+      //  開いてるユーザーが自分に送ったメッセージ
       const messagestoCurrent = _.filter(user.messages, {to_user_id: currentUser.id})
       const messagestoCurrentLength = messagestoCurrent.length
       const lastMessagetoCurrent = messagestoCurrent[messagestoCurrentLength - 1]
-      const userChatAccess = this.getLastAccess(user.id)
+
+      //  開いてるユーザーに自分が送ったメッセージ
+      const messagesfromCurrent = _.filter(currentUser.messages, {to_user_id: user.id})
+      const messagesfromCurrentLength = messagesfromCurrent.length
+      const lastMessagefromCurrent = messagesfromCurrent[messagesfromCurrentLength - 1]
+
+      var lastMessage
+      if (lastMessagetoCurrent && lastMessagefromCurrent) {
+        if (lastMessagefromCurrent.created_at > lastMessagetoCurrent.created_at) {
+          lastMessage = lastMessagefromCurrent
+        } else if (lastMessagefromCurrent.created_at < lastMessagetoCurrent.created_at) {
+          lastMessage = lastMessagetoCurrent
+        }
+      } else if (!lastMessagefromCurrent && lastMessagetoCurrent) {
+        lastMessage = lastMessagetoCurrent
+      } else if (lastMessagefromCurrent && !lastMessagetoCurrent) {
+        lastMessage = lastMessagefromCurrent
+      }
+
+      const date = lastMessage ? Utils.getNiceDate(lastMessage.created_at) : ''
+
       let newMessageIcon
       if (lastMessagetoCurrent) {
         if (!userChatAccess || lastMessagetoCurrent.created_at > userChatAccess.last_access) {
@@ -87,7 +109,21 @@ class UserList extends React.Component {
             <i className='fa fa-circle new-message-icon' />
           )
         }
-
+      }
+      let statusIcon
+      // 何かしら送られて来てるとき
+      if (lastMessagetoCurrent && lastMessagefromCurrent) {
+        if (lastMessagetoCurrent.created_at < lastMessagefromCurrent.created_at) {
+          statusIcon = (
+            <i className='fa fa-reply user-list__item__icon' />
+            )
+        }
+      }
+      // 何も送られて来てないとき
+      if (!lastMessagetoCurrent && lastMessagefromCurrent) {
+        statusIcon = (
+          <i className='fa fa-reply user-list__item__icon' />
+          )
       }
 
       const itemClasses = classNames({
@@ -123,10 +159,16 @@ class UserList extends React.Component {
             <img src={user.image.url ? user.image.url : 'assets/images/default_image.jpg'}/>
           </div>
           <div className='user-list__item__details'>
-            <div className='user-list__item__name'>
-              {newMessageIcon}
-              <a href={`users/${user.id}`} className='user-list-name'>{user.name}</a>
-            </div>
+              <h4 className='user-list__item__name'>
+                 {newMessageIcon}{user.name}
+                <abbr className='user-list__item__timestamp'>
+                  {date}
+                </abbr>
+              </h4>
+            <span className='user-list__item__message'>
+              {statusIcon}
+              {lastMessage ? lastMessage.content : ''}
+            </span>
           </div>
         </li>
       )
@@ -142,4 +184,5 @@ class UserList extends React.Component {
   }
 }
 
+window.UserList = UserList
 export default UserList

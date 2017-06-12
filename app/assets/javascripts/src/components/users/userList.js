@@ -41,7 +41,6 @@ export default class UserList extends React.Component {
 
   render() {
     const searchUsers = this.state.users
-    console.log(searchUsers)
     return (
       <ul className='search_user_list'>
         {
