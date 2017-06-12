@@ -35,8 +35,9 @@ class ReplyBox extends React.Component {
 
   handleKeyDown(e) {
     const {value, toUserId} = this.state
+    const time = new Date()
     if (e.keyCode === 13 && value !== '') {
-      MessagesAction.saveMessage(value, toUserId)
+      MessagesAction.saveMessage(value, toUserId, time)
       this.setState({
         value: '',
       })
@@ -53,7 +54,8 @@ class ReplyBox extends React.Component {
     const inputDOM = e.target
     if (!inputDOM.files.length) return
     const file = inputDOM.files[0]
-    MessagesAction.saveImageChat(file, this.state.toUserId)
+    const time = new Date()
+    MessagesAction.saveImageChat(file, this.state.toUserId, time)
   }
 
   render() {

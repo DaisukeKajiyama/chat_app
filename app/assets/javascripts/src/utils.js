@@ -30,7 +30,6 @@ const Utils = {
     const params = {'_method': 'delete'}
     Utils.post(path, params)
   },
-
   getNiceDate(timestamp) {
     const defaultString = '%d %f%y at %h:%i'
 

@@ -87,11 +87,11 @@ class UserList extends React.Component {
       const messagesfromCurrentLength = messagesfromCurrent.length
       const lastMessagefromCurrent = messagesfromCurrent[messagesfromCurrentLength - 1]
 
-      var lastMessage
+      let lastMessage
       if (lastMessagetoCurrent && lastMessagefromCurrent) {
-        if (lastMessagefromCurrent.created_at > lastMessagetoCurrent.created_at) {
+        if (Date.parse(lastMessagefromCurrent.created_at) > Date.parse(lastMessagetoCurrent.created_at)) {
           lastMessage = lastMessagefromCurrent
-        } else if (lastMessagefromCurrent.created_at < lastMessagetoCurrent.created_at) {
+        } else if (Date.parse(lastMessagefromCurrent.created_at) < Date.parse(lastMessagetoCurrent.created_at)) {
           lastMessage = lastMessagetoCurrent
         }
       } else if (!lastMessagefromCurrent && lastMessagetoCurrent) {
@@ -100,11 +100,11 @@ class UserList extends React.Component {
         lastMessage = lastMessagefromCurrent
       }
 
-      const date = lastMessage ? Utils.getNiceDate(lastMessage.created_at) : ''
+      let date = lastMessage ? Utils.getNiceDate(lastMessage.created_at) : ''
 
       let newMessageIcon
       if (lastMessagetoCurrent) {
-        if (!userChatAccess || lastMessagetoCurrent.created_at > userChatAccess.last_access) {
+        if (!userChatAccess || Date.parse(lastMessagetoCurrent.created_at) > Date.parse(userChatAccess.last_access)) {
           newMessageIcon = (
             <i className='fa fa-circle new-message-icon' />
           )
@@ -113,7 +113,7 @@ class UserList extends React.Component {
       let statusIcon
       // 何かしら送られて来てるとき
       if (lastMessagetoCurrent && lastMessagefromCurrent) {
-        if (lastMessagetoCurrent.created_at < lastMessagefromCurrent.created_at) {
+        if (Date.parse(lastMessagetoCurrent.created_at) < Date.parse(lastMessagefromCurrent.created_at)) {
           statusIcon = (
             <i className='fa fa-reply user-list__item__icon' />
             )

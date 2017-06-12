@@ -26,7 +26,7 @@ class App extends React.Component {
     const users = MessagesStore.getUserMessages()
     const openUserMessages = users.messages ? _.filter(users.messages, {to_user_id: currentUser.id}) : []
     const allMessages = _.concat(currentUserMessagesToUser, openUserMessages)
-    const messages = _.sortBy(allMessages, (message) => { return message.created_at })
+    const messages = _.sortBy(allMessages, (message) => { return Date.parse(message.created_at) })
 
     return {
       currentUser,

@@ -19,7 +19,7 @@ module Api
     private
 
       def message_params
-        params.require(:message).permit(:content, :to_user_id)
+        params.require(:message).permit(:content, :to_user_id, :created_at)
       end
 
   end
