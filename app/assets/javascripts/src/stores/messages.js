@@ -4,7 +4,6 @@ import UserStore from './users'
 import CurrentUserStore from './currentUser'
 import MessagesAction from '../actions/messages'
 import {ActionTypes} from '../constants/app'
-import _ from 'lodash'
 
 var openChatID = parseInt(Object.keys(UserStore.getUsers())[0], 10)
 
@@ -34,16 +33,6 @@ const MessagesStore = new ChatStore()
 
 MessagesStore.dispatchToken = Dispatcher.register(payload => {
   const action = payload.action
-  // const currentUserID = CurrentUserStore.getCurrentUser().id
-  // const openChatId = MessagesStore.getOpenChatUserID()
-  // const currentUser = CurrentUserStore.getCurrentUser()
-  // if (!currentUser) return {}
-  // const currentUserMessages = currentUser.messages ? currentUser.messages : []
-  // const currentUserMessagesToUser = _.filter(currentUserMessages, {to_user_id: openChatId})
-  // const users = MessagesStore.getUserMessages()
-  // const openUserMessages = users.messages ? _.filter(users.messages, {to_user_id: currentUser.id}) : []
-  // const allMessages = _.concat(currentUserMessagesToUser, openUserMessages)
-  // const messages = _.sortBy(allMessages, (message) => { return message.created_at })
 
   switch (action.type) {
 
