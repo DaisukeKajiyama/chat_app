@@ -6,6 +6,13 @@ module Api
       render json: @messages
     end
 
+    def show
+      @receiving_messages = Message.where(to_user_id:current_user.id, user_id:params[:id])
+      @sending_messages = Message.where(to_user_id:params[:id], user_id:current_user.id)
+      @messages = @receiving_messages + @sending_messages
+      render json: @messages
+    end
+
     def create
       @message = current_user.messages.create(message_params)
       render json: {message: @message}

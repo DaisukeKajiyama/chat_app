@@ -6,7 +6,6 @@ import UserStore from '../../stores/users'
 import MessagesAction from '../../actions/messages'
 import {CSRFToken} from '../../constants/app'
 import CurrentUserStore from '../../stores/currentUser'
-import Utils from '../../utils'
 
 class UserList extends React.Component {
 
@@ -49,18 +48,6 @@ class UserList extends React.Component {
 
   changeOpenChat(userID) {
     MessagesAction.loadUserMessages(userID)
-    const userChatAccess = this.getLastAccess(userID)
-    if (userChatAccess) {
-      MessagesAction.updateLastAccess(userID, new Date())
-    } else {
-      MessagesAction.createLastAccess(userID, new Date())
-    }
-  }
-
-  getLastAccess(toUserID) {
-    const {currentUser} = this.state
-    const lastAccess = _.find(currentUser.accesses, {to_user_id: toUserID})
-    return lastAccess
   }
 
   deleteChatConfirm(e) {
@@ -70,60 +57,9 @@ class UserList extends React.Component {
   }
 
   render() {
-    const {users, currentUser, openChatId} = this.state
+    const {users, openChatId} = this.state
 
     const friendUsers = _.map(users, (user) => {
-      const userChatAccess = this.getLastAccess(user.id)
-
-      //  開いてるユーザーが自分に送ったメッセージ
-      const messagestoCurrent = _.filter(user.messages, {to_user_id: currentUser.id})
-      const messagestoCurrentLength = messagestoCurrent.length
-      const lastMessagetoCurrent = messagestoCurrent[messagestoCurrentLength - 1]
-
-      //  開いてるユーザーに自分が送ったメッセージ
-      const messagesfromCurrent = _.filter(currentUser.messages, {to_user_id: user.id})
-      const messagesfromCurrentLength = messagesfromCurrent.length
-      const lastMessagefromCurrent = messagesfromCurrent[messagesfromCurrentLength - 1]
-
-      let lastMessage
-      if (lastMessagetoCurrent && lastMessagefromCurrent) {
-        if (Date.parse(lastMessagefromCurrent.created_at) > Date.parse(lastMessagetoCurrent.created_at)) {
-          lastMessage = lastMessagefromCurrent
-        } else if (Date.parse(lastMessagefromCurrent.created_at) < Date.parse(lastMessagetoCurrent.created_at)) {
-          lastMessage = lastMessagetoCurrent
-        }
-      } else if (!lastMessagefromCurrent && lastMessagetoCurrent) {
-        lastMessage = lastMessagetoCurrent
-      } else if (lastMessagefromCurrent && !lastMessagetoCurrent) {
-        lastMessage = lastMessagefromCurrent
-      }
-
-      let date = lastMessage ? Utils.getNiceDate(lastMessage.created_at) : ''
-
-      let newMessageIcon
-      if (lastMessagetoCurrent) {
-        if (!userChatAccess || Date.parse(lastMessagetoCurrent.created_at) > Date.parse(userChatAccess.last_access)) {
-          newMessageIcon = (
-            <i className='fa fa-circle new-message-icon' />
-          )
-        }
-      }
-      let statusIcon
-      // 何かしら送られて来てるとき
-      if (lastMessagetoCurrent && lastMessagefromCurrent) {
-        if (Date.parse(lastMessagetoCurrent.created_at) < Date.parse(lastMessagefromCurrent.created_at)) {
-          statusIcon = (
-            <i className='fa fa-reply user-list__item__icon' />
-            )
-        }
-      }
-      // 何も送られて来てないとき
-      if (!lastMessagetoCurrent && lastMessagefromCurrent) {
-        statusIcon = (
-          <i className='fa fa-reply user-list__item__icon' />
-          )
-      }
-
       const itemClasses = classNames({
         'user-list__item': true,
         'clear': true,
@@ -158,15 +94,8 @@ class UserList extends React.Component {
           </div>
           <div className='user-list__item__details'>
               <h4 className='user-list__item__name'>
-                 {newMessageIcon}{user.name}
-                <abbr className='user-list__item__timestamp'>
-                  {date}
-                </abbr>
+                 {user.name}
               </h4>
-            <span className='user-list__item__message'>
-              {statusIcon}
-              {lastMessage ? lastMessage.content : ''}
-            </span>
           </div>
         </li>
       )

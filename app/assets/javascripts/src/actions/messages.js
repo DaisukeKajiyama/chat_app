@@ -6,7 +6,7 @@ export default {
   loadUserMessages(id) {
     return new Promise((resolve, reject) => {
       request
-      .get(`${APIEndpoints.USERS}/${id}`)
+      .get(`${APIEndpoints.MESSAGES}/${id}`)
       .end((error, res) => {
         if (!error && res.status === 200) {
           const json = JSON.parse(res.text)

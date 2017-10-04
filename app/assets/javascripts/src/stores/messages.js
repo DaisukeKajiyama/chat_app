@@ -44,13 +44,13 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
     case ActionTypes.SAVE_MESSAGE:
       {
-        const messages = CurrentUserStore.getCurrentUser().messages
-        const currentUserID = CurrentUserStore.getCurrentUser().id
+        const messages = MessagesStore.getUserMessages()
+        const currentUserId = CurrentUserStore.getCurrentUser().id
         messages.push({
           id: Math.floor(Math.random() * 1000000),
           content: action.content,
           to_user_id: action.to_user_id,
-          user_id: currentUserID,
+          user_id: currentUserId,
           created_at: action.created_at,
           image: '',
         })
@@ -60,11 +60,11 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
     case ActionTypes.SAVE_IMAGE_CHAT:
       {
-        const messages = CurrentUserStore.getCurrentUser().messages
-        const currentUserID = CurrentUserStore.getCurrentUser().id
+        const messages = MessagesStore.getUserMessages()
+        const currentUserId = CurrentUserStore.getCurrentUser().id
         messages.push({
           to_user_id: action.to_user_id,
-          user_id: currentUserID,
+          user_id: currentUserId,
           created_at: action.created_at,
           image: {url: '/message_images/' + action.image},
         })
