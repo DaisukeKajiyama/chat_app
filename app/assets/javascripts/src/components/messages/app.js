@@ -10,7 +10,7 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = this.initialState
-    this.onChangeHandler = this.onStoreChange.bind(this)
+    this.onStoreChange = this.onStoreChange.bind(this)
   }
 
   get initialState() {
@@ -18,11 +18,11 @@ class App extends React.Component {
   }
 
   getStateFromStores() {
-    const openChatID = MessagesStore.getOpenChatUserID()
+    const openChatId = MessagesStore.getOpenChatUserId()
     const currentUser = CurrentUserStore.getCurrentUser()
     if (!currentUser) return {}
     const currentUserMessages = currentUser.messages ? currentUser.messages : []
-    const currentUserMessagesToUser = _.filter(currentUserMessages, {to_user_id: openChatID})
+    const currentUserMessagesToUser = _.filter(currentUserMessages, {to_user_id: openChatId})
     const users = MessagesStore.getUserMessages()
     const openUserMessages = users.messages ? _.filter(users.messages, {to_user_id: currentUser.id}) : []
     const allMessages = _.concat(currentUserMessagesToUser, openUserMessages)
@@ -35,13 +35,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    MessagesStore.onChange(this.onChangeHandler)
-    CurrentUserStore.onChange(this.onChangeHandler)
+    MessagesStore.onChange(this.onStoreChange)
+    CurrentUserStore.onChange(this.onStoreChange)
   }
 
   componentWillUnmount() {
-    MessagesStore.offChange(this.onChangeHandler)
-    CurrentUserStore.offChange(this.onChangeHandler)
+    MessagesStore.offChange(this.onStoreChange)
+    CurrentUserStore.offChange(this.onStoreChange)
   }
 
   onStoreChange() {

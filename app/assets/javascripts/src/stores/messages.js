@@ -5,17 +5,17 @@ import CurrentUserStore from './currentUser'
 import MessagesAction from '../actions/messages'
 import {ActionTypes} from '../constants/app'
 
-var openChatID = parseInt(Object.keys(UserStore.getUsers())[0], 10)
+let openChatId = parseInt(Object.keys(UserStore.getUsers())[0], 10)
 
 class ChatStore extends BaseStore {
 
-  getOpenChatUserID() {
+  getOpenChatUserId() {
     const users = UserStore.getUsers()
-    if (Number.isNaN(openChatID) && users.length !== 0) {
-      openChatID = users[0].id
-      MessagesAction.loadUserMessages(openChatID)
+    if (Number.isNaN(openChatId) && users.length !== 0) {
+      openChatId = users[0].id
+      MessagesAction.loadUserMessages(openChatId)
     }
-    return openChatID
+    return openChatId
   }
 
   getUserMessages() {
@@ -37,7 +37,7 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
   switch (action.type) {
 
     case ActionTypes.LOAD_USER_MESSAGES:
-      openChatID = action.id
+      openChatId = action.id
       MessagesStore.setUserMessages(action.json)
       MessagesStore.emitChange()
       break
@@ -75,7 +75,5 @@ MessagesStore.dispatchToken = Dispatcher.register(payload => {
 
   return true
 })
-
-window.hoge = MessagesStore
 
 export default MessagesStore

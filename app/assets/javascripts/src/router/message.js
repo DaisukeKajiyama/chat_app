@@ -6,21 +6,13 @@ import CurrentUserAction from '../actions/currentUser'
 
 export default class MessageRouter extends BaseRouter {
   register() {
-    this.route('/', this.decorateApp, this.loadUsers, this.loadCurrentUser)
-  }
-
-  loadUsers(ctx, next) {
-    UsersAction.loadUsers()
-    next()
-  }
-
-  loadCurrentUser(ctx, next) {
-    CurrentUserAction.loadCurrentUser()
-    next()
+    this.route('/', this.decorateApp)
   }
 
   decorateApp(ctx, next) {
     (new ReactDecorator()).decorate('react-main', App)
+    UsersAction.loadUsers()
+    CurrentUserAction.loadCurrentUser()
     next()
   }
 }

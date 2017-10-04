@@ -4,7 +4,6 @@ import classNames from 'classnames'
 import MessagesStore from '../../stores/messages'
 import UserStore from '../../stores/users'
 import MessagesAction from '../../actions/messages'
-import CurrentUserAction from '../../actions/currentUser'
 import {CSRFToken} from '../../constants/app'
 import CurrentUserStore from '../../stores/currentUser'
 import Utils from '../../utils'
@@ -26,7 +25,7 @@ class UserList extends React.Component {
     const currentUserID = currentUser.id
     return {
       users: UserStore.getUsers(),
-      openChatID: MessagesStore.getOpenChatUserID(),
+      openChatId: MessagesStore.getOpenChatUserId(),
       currentUser,
       currentUserID,
     }
@@ -56,7 +55,6 @@ class UserList extends React.Component {
     } else {
       MessagesAction.createLastAccess(userID, new Date())
     }
-    CurrentUserAction.loadCurrentUser()
   }
 
   getLastAccess(toUserID) {
@@ -72,7 +70,7 @@ class UserList extends React.Component {
   }
 
   render() {
-    const {users, currentUser, openChatID} = this.state
+    const {users, currentUser, openChatId} = this.state
 
     const friendUsers = _.map(users, (user) => {
       const userChatAccess = this.getLastAccess(user.id)
@@ -129,7 +127,7 @@ class UserList extends React.Component {
       const itemClasses = classNames({
         'user-list__item': true,
         'clear': true,
-        'user-list__item--active': openChatID === user.id,
+        'user-list__item--active': openChatId === user.id,
       })
       return (
         <li
@@ -184,5 +182,4 @@ class UserList extends React.Component {
   }
 }
 
-window.UserList = UserList
 export default UserList

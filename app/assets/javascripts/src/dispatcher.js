@@ -7,6 +7,7 @@ const appDispatcher = assign(new Dispatcher(), {
       source: 'server',
       action: action,
     })
+    console.log(action)
   },
 
   handleViewAction(action) {
@@ -14,6 +15,7 @@ const appDispatcher = assign(new Dispatcher(), {
       source: 'view',
       action: action,
     })
+    console.log(action)
   },
 })
 

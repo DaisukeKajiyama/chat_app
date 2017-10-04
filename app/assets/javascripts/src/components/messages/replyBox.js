@@ -17,7 +17,7 @@ class ReplyBox extends React.Component {
   getStateFromStores() {
     return {
       value: '',
-      toUserId: MessagesStore.getOpenChatUserID(),
+      toUserId: MessagesStore.getOpenChatUserId(),
     }
   }
 
