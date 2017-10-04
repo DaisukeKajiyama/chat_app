@@ -2,8 +2,7 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '4.2.6'
-gem 'sqlite3', groups: %w(test development), require: false
-gem 'pg', groups: %w(production), require: false
+gem 'sqlite3'
 gem 'carrierwave'
 gem 'mini_magick',             '3.8.0'
 gem 'fog',                     '1.36.0'
@@ -24,7 +23,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+
   gem 'pry-byebug'
 end
 
